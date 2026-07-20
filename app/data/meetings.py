@@ -38,6 +38,30 @@ def create_meeting(title: str, date: str, attendees: list[str], summary: str) ->
         return Meeting.model_validate(row)
 
 
+def update_meeting(
+    meeting_id: str,
+    title: Optional[str] = None,
+    date: Optional[str] = None,
+    attendees: Optional[list[str]] = None,
+    summary: Optional[str] = None,
+) -> Optional[Meeting]:
+    with SessionLocal() as session:
+        row = session.get(MeetingRow, meeting_id)
+        if row is None:
+            return None
+        if title is not None:
+            row.title = title
+        if date is not None:
+            row.date = date
+        if attendees is not None:
+            row.attendees = attendees
+        if summary is not None:
+            row.summary = summary
+        session.commit()
+        session.refresh(row)
+        return Meeting.model_validate(row)
+
+
 def list_meetings(date: Optional[str] = None, attendee: Optional[str] = None) -> list[Meeting]:
     with SessionLocal() as session:
         stmt = select(MeetingRow)

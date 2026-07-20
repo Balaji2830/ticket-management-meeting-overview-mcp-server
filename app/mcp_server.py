@@ -4,6 +4,7 @@ from mcp.server.fastmcp import FastMCP
 
 from app.data.meetings import create_meeting as _create_meeting
 from app.data.meetings import list_meetings as _list_meetings
+from app.data.meetings import update_meeting as _update_meeting
 from app.data.tickets import TicketStatus
 from app.data.tickets import create_ticket as _create_ticket
 from app.data.tickets import list_tickets as _list_tickets
@@ -51,6 +52,21 @@ def list_meetings(date: Optional[str] = None, attendee: Optional[str] = None) ->
 def create_meeting(title: str, date: str, attendees: list[str], summary: str) -> dict:
     """Create a new meeting with a title, date (YYYY-MM-DD), attendee list, and summary."""
     return _create_meeting(title, date, attendees, summary).model_dump()
+
+
+@mcp.tool()
+def update_meeting(
+    id: str,
+    title: Optional[str] = None,
+    date: Optional[str] = None,
+    attendees: Optional[list[str]] = None,
+    summary: Optional[str] = None,
+) -> dict:
+    """Update an existing meeting's title, date, attendees, and/or summary by id."""
+    meeting = _update_meeting(id, title=title, date=date, attendees=attendees, summary=summary)
+    if meeting is None:
+        raise ValueError(f'No meeting found with id "{id}".')
+    return meeting.model_dump()
 
 
 if __name__ == "__main__":
