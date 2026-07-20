@@ -1,7 +1,7 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { z } from "zod";
-import { tickets, type TicketStatus } from "./data/tickets.js";
+import { tickets, createTicket, type TicketStatus } from "./data/tickets.js";
 import { meetings } from "./data/meetings.js";
 
 const server = new McpServer({
@@ -32,6 +32,23 @@ server.registerTool(
     const filtered = status ? tickets.filter((t) => t.status === status) : tickets;
     return {
       content: [{ type: "text", text: JSON.stringify(filtered, null, 2) }],
+    };
+  }
+);
+
+server.registerTool(
+  "create_ticket",
+  {
+    description: "Create a new ticket with a title and assignee. Status defaults to open.",
+    inputSchema: {
+      title: z.string().min(1),
+      assignee: z.string().min(1),
+    },
+  },
+  async ({ title, assignee }: { title: string; assignee: string }) => {
+    const ticket = createTicket({ title, assignee });
+    return {
+      content: [{ type: "text", text: JSON.stringify(ticket, null, 2) }],
     };
   }
 );

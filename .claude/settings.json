@@ -22,7 +22,10 @@
       "Bash(git commit -m 'Scaffold TypeScript MCP server project *)",
       "Bash(rm /tmp/mcp_test.mjs)",
       "Bash(git commit -m 'Add list_tickets MCP tool with mock ticket data *)",
-      "Bash(rm /tmp/mcp_test2.mjs)"
+      "Bash(rm /tmp/mcp_test2.mjs)",
+      "Bash(git commit -m 'Add list_meetings MCP tool with mock meeting data *)",
+      "Bash(rm /tmp/mcp_test3.mjs)",
+      "Bash(git commit -m 'Add create_ticket MCP tool *)"
     ]
   }
 }
