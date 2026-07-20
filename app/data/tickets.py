@@ -58,3 +58,13 @@ def update_ticket(
         session.commit()
         session.refresh(row)
         return Ticket.model_validate(row)
+
+
+def delete_ticket(ticket_id: str) -> bool:
+    with SessionLocal() as session:
+        row = session.get(TicketRow, ticket_id)
+        if row is None:
+            return False
+        session.delete(row)
+        session.commit()
+        return True

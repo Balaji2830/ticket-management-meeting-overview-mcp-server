@@ -53,7 +53,8 @@
       "Bash(rm -f /tmp/uvicorn2.log)",
       "Bash(git commit -m 'Switch to PostgreSQL for persistent storage *)",
       "Bash(node /tmp/mcp_upd_meeting_test.mjs)",
-      "Bash(sed -i 's/}, 700\\);/}, 1200\\);/; s/}, 2500\\);/}, 4000\\);/' /tmp/mcp_upd_meeting_test.mjs)"
+      "Bash(sed -i 's/}, 700\\);/}, 1200\\);/; s/}, 2500\\);/}, 4000\\);/' /tmp/mcp_upd_meeting_test.mjs)",
+      "Bash(git commit -m 'Add update_meeting MCP tool and REST endpoint *)"
     ]
   }
 }

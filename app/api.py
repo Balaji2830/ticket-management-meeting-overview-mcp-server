@@ -5,10 +5,12 @@ from pydantic import BaseModel
 
 from app.data.meetings import Meeting
 from app.data.meetings import create_meeting as _create_meeting
+from app.data.meetings import delete_meeting as _delete_meeting
 from app.data.meetings import list_meetings as _list_meetings
 from app.data.meetings import update_meeting as _update_meeting
 from app.data.tickets import Ticket, TicketStatus
 from app.data.tickets import create_ticket as _create_ticket
+from app.data.tickets import delete_ticket as _delete_ticket
 from app.data.tickets import list_tickets as _list_tickets
 from app.data.tickets import update_ticket as _update_ticket
 
@@ -41,6 +43,12 @@ def patch_ticket(ticket_id: str, body: UpdateTicketRequest):
     if ticket is None:
         raise HTTPException(status_code=404, detail=f'No ticket found with id "{ticket_id}".')
     return ticket
+
+
+@app.delete("/tickets/{ticket_id}", status_code=204)
+def delete_ticket_endpoint(ticket_id: str):
+    if not _delete_ticket(ticket_id):
+        raise HTTPException(status_code=404, detail=f'No ticket found with id "{ticket_id}".')
 
 
 class CreateMeetingRequest(BaseModel):
@@ -79,3 +87,9 @@ def patch_meeting(meeting_id: str, body: UpdateMeetingRequest):
     if meeting is None:
         raise HTTPException(status_code=404, detail=f'No meeting found with id "{meeting_id}".')
     return meeting
+
+
+@app.delete("/meetings/{meeting_id}", status_code=204)
+def delete_meeting_endpoint(meeting_id: str):
+    if not _delete_meeting(meeting_id):
+        raise HTTPException(status_code=404, detail=f'No meeting found with id "{meeting_id}".')

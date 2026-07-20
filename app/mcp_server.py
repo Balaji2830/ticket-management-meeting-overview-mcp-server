@@ -3,10 +3,12 @@ from typing import Optional
 from mcp.server.fastmcp import FastMCP
 
 from app.data.meetings import create_meeting as _create_meeting
+from app.data.meetings import delete_meeting as _delete_meeting
 from app.data.meetings import list_meetings as _list_meetings
 from app.data.meetings import update_meeting as _update_meeting
 from app.data.tickets import TicketStatus
 from app.data.tickets import create_ticket as _create_ticket
+from app.data.tickets import delete_ticket as _delete_ticket
 from app.data.tickets import list_tickets as _list_tickets
 from app.data.tickets import update_ticket as _update_ticket
 
@@ -43,6 +45,14 @@ def update_ticket(
 
 
 @mcp.tool()
+def delete_ticket(id: str) -> dict:
+    """Delete a ticket by id."""
+    if not _delete_ticket(id):
+        raise ValueError(f'No ticket found with id "{id}".')
+    return {"deleted": id}
+
+
+@mcp.tool()
 def list_meetings(date: Optional[str] = None, attendee: Optional[str] = None) -> list[dict]:
     """List meetings, optionally filtered by date (YYYY-MM-DD) and/or attendee name."""
     return [m.model_dump() for m in _list_meetings(date, attendee)]
@@ -67,6 +77,14 @@ def update_meeting(
     if meeting is None:
         raise ValueError(f'No meeting found with id "{id}".')
     return meeting.model_dump()
+
+
+@mcp.tool()
+def delete_meeting(id: str) -> dict:
+    """Delete a meeting by id."""
+    if not _delete_meeting(id):
+        raise ValueError(f'No meeting found with id "{id}".')
+    return {"deleted": id}
 
 
 if __name__ == "__main__":

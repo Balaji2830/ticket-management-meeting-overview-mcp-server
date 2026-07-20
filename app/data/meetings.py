@@ -62,6 +62,16 @@ def update_meeting(
         return Meeting.model_validate(row)
 
 
+def delete_meeting(meeting_id: str) -> bool:
+    with SessionLocal() as session:
+        row = session.get(MeetingRow, meeting_id)
+        if row is None:
+            return False
+        session.delete(row)
+        session.commit()
+        return True
+
+
 def list_meetings(date: Optional[str] = None, attendee: Optional[str] = None) -> list[Meeting]:
     with SessionLocal() as session:
         stmt = select(MeetingRow)
