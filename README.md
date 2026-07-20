@@ -6,7 +6,8 @@ overview functionality, backed by PostgreSQL. Ships with:
 - **MCP server** (`app/mcp_server.py`) — stdio transport, built on the official
   Python MCP SDK (`FastMCP`)
 - **REST API** (`app/api.py`) — FastAPI, exposing the same operations over HTTP
-- Both share the same PostgreSQL-backed data layer (`app/data/`)
+- **Frontend** (`frontend/`) — a React dashboard for tickets and meetings
+- All share the same PostgreSQL-backed data layer (`app/data/`)
 
 ## Stack
 
@@ -65,6 +66,16 @@ overview functionality, backed by PostgreSQL. Ships with:
 
   Interactive docs available at `http://127.0.0.1:8000/docs`.
 
+- **Frontend** (requires the REST API running on port 8000):
+
+  ```
+  cd frontend
+  npm install
+  npm run dev
+  ```
+
+  Open `http://localhost:5173`.
+
 ## Running tests
 
 ```
@@ -106,4 +117,5 @@ app/
   seed.py            # Creates tables and seeds initial data
 tests/               # pytest suite (data layer + REST API), isolated test DB
 docker-compose.yml    # Local PostgreSQL for development
+frontend/            # React + Vite dashboard (tickets + meetings CRUD UI)
 ```
