@@ -1,6 +1,7 @@
 from typing import Optional
 
 from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
 from app.data.meetings import Meeting
@@ -15,6 +16,13 @@ from app.data.tickets import list_tickets as _list_tickets
 from app.data.tickets import update_ticket as _update_ticket
 
 app = FastAPI(title="Ticket Management & Meeting Overview API")
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:5173"],
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 class CreateTicketRequest(BaseModel):

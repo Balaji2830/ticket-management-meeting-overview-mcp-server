@@ -55,7 +55,26 @@
       "Bash(node /tmp/mcp_upd_meeting_test.mjs)",
       "Bash(sed -i 's/}, 700\\);/}, 1200\\);/; s/}, 2500\\);/}, 4000\\);/' /tmp/mcp_upd_meeting_test.mjs)",
       "Bash(git commit -m 'Add update_meeting MCP tool and REST endpoint *)",
-      "Bash(git commit -m 'Add automated pytest test suite *)"
+      "Bash(git commit -m 'Add automated pytest test suite *)",
+      "Bash(rm -f /tmp/uvicorn_demo.log)",
+      "Bash(npm create *)",
+      "Bash(npx tailwindcss *)",
+      "Bash(rm -rf \"c:/Users/Admin/ticket-management-meeting-overview-mcp-server/frontend/src/assets\")",
+      "Bash(npx --yes playwright --version)",
+      "Read(//c/Users/Admin/AppData/Local/Temp/**)",
+      "Bash(curl -sf http://127.0.0.1:5173 -o /dev/null -w \"%{http_code}\\\\n\")",
+      "Bash(curl -sf http://localhost:5173 -o /dev/null -w \"%{http_code}\\\\n\")",
+      "Bash(npx --yes playwright install chromium)",
+      "Bash(node \"C:/Users/Admin/AppData/Local/Temp/claude/c--Users-Admin-ticket-management-meeting-overview-mcp-server/76079cdb-c221-49f6-b40f-198d3fce9470/scratchpad/playwright_check.mjs\")",
+      "Bash(cp \"C:/Users/Admin/AppData/Local/Temp/claude/c--Users-Admin-ticket-management-meeting-overview-mcp-server/76079cdb-c221-49f6-b40f-198d3fce9470/scratchpad/playwright_check.mjs\" \"c:/Users/Admin/ticket-management-meeting-overview-mcp-server/frontend/playwright_check.mjs\")",
+      "Bash(node playwright_check.mjs)",
+      "Bash(node playwright_check2.mjs)",
+      "Bash(curl -s http://127.0.0.1:8000/tickets)",
+      "Bash(curl -s http://127.0.0.1:8000/meetings)",
+      "Bash(lsof -ti:5173 -sTCP:LISTEN)",
+      "Bash(xargs -r kill)",
+      "PowerShell(Stop-Process -Id 9888 -Force -ErrorAction SilentlyContinue)",
+      "PowerShell(Get-NetTCPConnection -LocalPort 5173 -ErrorAction SilentlyContinue)"
     ]
   }
 }
