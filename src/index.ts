@@ -88,12 +88,27 @@ server.registerTool(
 server.registerTool(
   "list_meetings",
   {
-    description: "List meetings with their date, attendees, and summary.",
-    inputSchema: {},
+    description:
+      "List meetings with their date, attendees, and summary. Optionally filter by date (YYYY-MM-DD) and/or attendee name.",
+    inputSchema: {
+      date: z.string().optional(),
+      attendee: z.string().optional(),
+    },
   },
-  async () => ({
-    content: [{ type: "text", text: JSON.stringify(meetings, null, 2) }],
-  })
+  async ({ date, attendee }: { date?: string; attendee?: string }) => {
+    let filtered = meetings;
+    if (date) {
+      filtered = filtered.filter((m) => m.date === date);
+    }
+    if (attendee) {
+      filtered = filtered.filter((m) =>
+        m.attendees.some((a) => a.toLowerCase() === attendee.toLowerCase())
+      );
+    }
+    return {
+      content: [{ type: "text", text: JSON.stringify(filtered, null, 2) }],
+    };
+  }
 );
 
 async function main() {

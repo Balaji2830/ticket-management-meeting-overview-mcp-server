@@ -27,7 +27,9 @@
       "Bash(rm /tmp/mcp_test3.mjs)",
       "Bash(git commit -m 'Add create_ticket MCP tool *)",
       "Bash(rm /tmp/mcp_test4.mjs)",
-      "Bash(git commit -m 'Add update_ticket MCP tool *)"
+      "Bash(git commit -m 'Add update_ticket MCP tool *)",
+      "Bash(rm /tmp/mcp_test5.mjs)",
+      "Bash(git commit -m 'Add date/attendee filtering to list_meetings *)"
     ]
   }
 }
