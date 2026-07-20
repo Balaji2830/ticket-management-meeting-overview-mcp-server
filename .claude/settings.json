@@ -29,7 +29,14 @@
       "Bash(rm /tmp/mcp_test4.mjs)",
       "Bash(git commit -m 'Add update_ticket MCP tool *)",
       "Bash(rm /tmp/mcp_test5.mjs)",
-      "Bash(git commit -m 'Add date/attendee filtering to list_meetings *)"
+      "Bash(git commit -m 'Add date/attendee filtering to list_meetings *)",
+      "Bash(pip --version)",
+      "Bash(python -m pip --version)",
+      "Bash(git rm *)",
+      "Read(//tmp/**)",
+      "Bash(python -m venv .venv)",
+      "Bash(rm -f /tmp/mcp_py_test.mjs /tmp/uvicorn.log)",
+      "Bash(taskkill //F //IM uvicorn.exe)"
     ]
   }
 }
