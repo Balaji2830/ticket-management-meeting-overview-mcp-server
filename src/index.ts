@@ -1,6 +1,7 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { z } from "zod";
+import { tickets, type TicketStatus } from "./data/tickets.js";
 
 const server = new McpServer({
   name: "ticket-management-meeting-overview-mcp-server",
@@ -16,6 +17,22 @@ server.registerTool(
   async ({ message }) => ({
     content: [{ type: "text", text: message }],
   })
+);
+
+server.registerTool(
+  "list_tickets",
+  {
+    description: "List tickets, optionally filtered by status.",
+    inputSchema: {
+      status: z.enum(["open", "in_progress", "closed"]).optional(),
+    },
+  },
+  async ({ status }: { status?: TicketStatus }) => {
+    const filtered = status ? tickets.filter((t) => t.status === status) : tickets;
+    return {
+      content: [{ type: "text", text: JSON.stringify(filtered, null, 2) }],
+    };
+  }
 );
 
 async function main() {

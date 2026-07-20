@@ -18,7 +18,10 @@
       "Bash(npx tsc *)",
       "Bash(npm run *)",
       "Bash(timeout 3 node dist/index.js)",
-      "Bash(echo \"exit_code=$?\")"
+      "Bash(echo \"exit_code=$?\")",
+      "Bash(git commit -m 'Scaffold TypeScript MCP server project *)",
+      "Bash(rm /tmp/mcp_test.mjs)",
+      "Bash(git commit -m 'Add list_tickets MCP tool with mock ticket data *)"
     ]
   }
 }
