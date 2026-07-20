@@ -4,6 +4,7 @@ from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 
 from app.data.meetings import Meeting
+from app.data.meetings import create_meeting as _create_meeting
 from app.data.meetings import list_meetings as _list_meetings
 from app.data.tickets import Ticket, TicketStatus
 from app.data.tickets import create_ticket as _create_ticket
@@ -41,6 +42,18 @@ def patch_ticket(ticket_id: str, body: UpdateTicketRequest):
     return ticket
 
 
+class CreateMeetingRequest(BaseModel):
+    title: str
+    date: str
+    attendees: list[str]
+    summary: str
+
+
 @app.get("/meetings", response_model=list[Meeting])
 def get_meetings(date: Optional[str] = None, attendee: Optional[str] = None):
     return _list_meetings(date, attendee)
+
+
+@app.post("/meetings", response_model=Meeting)
+def post_meeting(body: CreateMeetingRequest):
+    return _create_meeting(body.title, body.date, body.attendees, body.summary)

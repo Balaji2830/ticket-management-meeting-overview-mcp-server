@@ -2,6 +2,7 @@ from typing import Optional
 
 from mcp.server.fastmcp import FastMCP
 
+from app.data.meetings import create_meeting as _create_meeting
 from app.data.meetings import list_meetings as _list_meetings
 from app.data.tickets import TicketStatus
 from app.data.tickets import create_ticket as _create_ticket
@@ -44,6 +45,12 @@ def update_ticket(
 def list_meetings(date: Optional[str] = None, attendee: Optional[str] = None) -> list[dict]:
     """List meetings, optionally filtered by date (YYYY-MM-DD) and/or attendee name."""
     return [m.model_dump() for m in _list_meetings(date, attendee)]
+
+
+@mcp.tool()
+def create_meeting(title: str, date: str, attendees: list[str], summary: str) -> dict:
+    """Create a new meeting with a title, date (YYYY-MM-DD), attendee list, and summary."""
+    return _create_meeting(title, date, attendees, summary).model_dump()
 
 
 if __name__ == "__main__":

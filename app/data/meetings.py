@@ -17,6 +17,27 @@ class Meeting(BaseModel):
     summary: str
 
 
+def _next_meeting_id(session) -> str:
+    existing_ids = session.scalars(select(MeetingRow.id)).all()
+    numbers = [int(i.split("-")[1]) for i in existing_ids if i.startswith("MTG-")]
+    return f"MTG-{max(numbers, default=0) + 1}"
+
+
+def create_meeting(title: str, date: str, attendees: list[str], summary: str) -> Meeting:
+    with SessionLocal() as session:
+        row = MeetingRow(
+            id=_next_meeting_id(session),
+            title=title,
+            date=date,
+            attendees=attendees,
+            summary=summary,
+        )
+        session.add(row)
+        session.commit()
+        session.refresh(row)
+        return Meeting.model_validate(row)
+
+
 def list_meetings(date: Optional[str] = None, attendee: Optional[str] = None) -> list[Meeting]:
     with SessionLocal() as session:
         stmt = select(MeetingRow)

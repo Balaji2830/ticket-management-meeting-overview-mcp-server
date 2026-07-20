@@ -50,7 +50,8 @@
       "Bash(netstat -ano)",
       "PowerShell(Get-Process -Id 11716,26896 -ErrorAction SilentlyContinue)",
       "Bash(node /tmp/mcp_pg_test.mjs)",
-      "Bash(rm -f /tmp/uvicorn2.log)"
+      "Bash(rm -f /tmp/uvicorn2.log)",
+      "Bash(git commit -m 'Switch to PostgreSQL for persistent storage *)"
     ]
   }
 }
