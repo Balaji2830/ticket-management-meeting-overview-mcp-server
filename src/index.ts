@@ -2,6 +2,7 @@ import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { z } from "zod";
 import { tickets, type TicketStatus } from "./data/tickets.js";
+import { meetings } from "./data/meetings.js";
 
 const server = new McpServer({
   name: "ticket-management-meeting-overview-mcp-server",
@@ -33,6 +34,17 @@ server.registerTool(
       content: [{ type: "text", text: JSON.stringify(filtered, null, 2) }],
     };
   }
+);
+
+server.registerTool(
+  "list_meetings",
+  {
+    description: "List meetings with their date, attendees, and summary.",
+    inputSchema: {},
+  },
+  async () => ({
+    content: [{ type: "text", text: JSON.stringify(meetings, null, 2) }],
+  })
 );
 
 async function main() {
