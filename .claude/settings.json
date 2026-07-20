@@ -36,7 +36,21 @@
       "Read(//tmp/**)",
       "Bash(python -m venv .venv)",
       "Bash(rm -f /tmp/mcp_py_test.mjs /tmp/uvicorn.log)",
-      "Bash(taskkill //F //IM uvicorn.exe)"
+      "Bash(taskkill //F //IM uvicorn.exe)",
+      "Bash(git commit -m 'Rewrite MCP server in Python; add FastAPI REST backend *)",
+      "Bash(psql --version)",
+      "Bash(docker --version)",
+      "Bash(pg_isready)",
+      "Bash(docker compose *)",
+      "Bash(tasklist)",
+      "Read(//c/Program Files/Docker/Docker/**)",
+      "Read(//c/Program Files/**)",
+      "Read(//c/Users/Admin/AppData/Local/Programs/DockerDesktop/**)",
+      "PowerShell(Start-Process \"C:\\\\Users\\\\Admin\\\\AppData\\\\Local\\\\Programs\\\\DockerDesktop\\\\Docker Desktop.exe\")",
+      "Bash(netstat -ano)",
+      "PowerShell(Get-Process -Id 11716,26896 -ErrorAction SilentlyContinue)",
+      "Bash(node /tmp/mcp_pg_test.mjs)",
+      "Bash(rm -f /tmp/uvicorn2.log)"
     ]
   }
 }

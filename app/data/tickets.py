@@ -1,38 +1,45 @@
 from typing import Literal, Optional
 
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
+from sqlalchemy import select
+
+from app.db import SessionLocal
+from app.models import TicketRow
 
 TicketStatus = Literal["open", "in_progress", "closed"]
 
 
 class Ticket(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
     id: str
     title: str
     status: TicketStatus
     assignee: str
 
 
-tickets: list[Ticket] = [
-    Ticket(id="TKT-1", title="Set up MCP server project", status="closed", assignee="Balaji"),
-    Ticket(id="TKT-2", title="Add ticket listing tool", status="in_progress", assignee="Balaji"),
-    Ticket(id="TKT-3", title="Add meeting overview tool", status="open", assignee="Balaji"),
-]
-
-_next_ticket_number = len(tickets) + 1
+def _next_ticket_id(session) -> str:
+    existing_ids = session.scalars(select(TicketRow.id)).all()
+    numbers = [int(i.split("-")[1]) for i in existing_ids if i.startswith("TKT-")]
+    return f"TKT-{max(numbers, default=0) + 1}"
 
 
 def list_tickets(status: Optional[TicketStatus] = None) -> list[Ticket]:
-    if status is None:
-        return tickets
-    return [t for t in tickets if t.status == status]
+    with SessionLocal() as session:
+        stmt = select(TicketRow)
+        if status is not None:
+            stmt = stmt.where(TicketRow.status == status)
+        rows = session.scalars(stmt.order_by(TicketRow.id)).all()
+        return [Ticket.model_validate(row) for row in rows]
 
 
 def create_ticket(title: str, assignee: str) -> Ticket:
-    global _next_ticket_number
-    ticket = Ticket(id=f"TKT-{_next_ticket_number}", title=title, status="open", assignee=assignee)
-    _next_ticket_number += 1
-    tickets.append(ticket)
-    return ticket
+    with SessionLocal() as session:
+        row = TicketRow(id=_next_ticket_id(session), title=title, status="open", assignee=assignee)
+        session.add(row)
+        session.commit()
+        session.refresh(row)
+        return Ticket.model_validate(row)
 
 
 def update_ticket(
@@ -40,11 +47,14 @@ def update_ticket(
     status: Optional[TicketStatus] = None,
     assignee: Optional[str] = None,
 ) -> Optional[Ticket]:
-    for ticket in tickets:
-        if ticket.id == ticket_id:
-            if status is not None:
-                ticket.status = status
-            if assignee is not None:
-                ticket.assignee = assignee
-            return ticket
-    return None
+    with SessionLocal() as session:
+        row = session.get(TicketRow, ticket_id)
+        if row is None:
+            return None
+        if status is not None:
+            row.status = status
+        if assignee is not None:
+            row.assignee = assignee
+        session.commit()
+        session.refresh(row)
+        return Ticket.model_validate(row)
