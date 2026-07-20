@@ -1,7 +1,7 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { z } from "zod";
-import { tickets, createTicket, type TicketStatus } from "./data/tickets.js";
+import { tickets, createTicket, updateTicket, type TicketStatus } from "./data/tickets.js";
 import { meetings } from "./data/meetings.js";
 
 const server = new McpServer({
@@ -47,6 +47,38 @@ server.registerTool(
   },
   async ({ title, assignee }: { title: string; assignee: string }) => {
     const ticket = createTicket({ title, assignee });
+    return {
+      content: [{ type: "text", text: JSON.stringify(ticket, null, 2) }],
+    };
+  }
+);
+
+server.registerTool(
+  "update_ticket",
+  {
+    description: "Update an existing ticket's status and/or assignee by id.",
+    inputSchema: {
+      id: z.string().min(1),
+      status: z.enum(["open", "in_progress", "closed"]).optional(),
+      assignee: z.string().min(1).optional(),
+    },
+  },
+  async ({
+    id,
+    status,
+    assignee,
+  }: {
+    id: string;
+    status?: TicketStatus;
+    assignee?: string;
+  }) => {
+    const ticket = updateTicket(id, { status, assignee });
+    if (!ticket) {
+      return {
+        isError: true,
+        content: [{ type: "text", text: `No ticket found with id "${id}".` }],
+      };
+    }
     return {
       content: [{ type: "text", text: JSON.stringify(ticket, null, 2) }],
     };

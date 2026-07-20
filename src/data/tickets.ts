@@ -25,3 +25,14 @@ export function createTicket(input: { title: string; assignee: string }): Ticket
   tickets.push(ticket);
   return ticket;
 }
+
+export function updateTicket(
+  id: string,
+  updates: { status?: TicketStatus; assignee?: string }
+): Ticket | undefined {
+  const ticket = tickets.find((t) => t.id === id);
+  if (!ticket) return undefined;
+  if (updates.status) ticket.status = updates.status;
+  if (updates.assignee) ticket.assignee = updates.assignee;
+  return ticket;
+}
