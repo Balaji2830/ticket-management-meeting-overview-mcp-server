@@ -1,0 +1,32 @@
+{
+  "name": "ticket-management-meeting-overview-mcp-server",
+  "version": "1.0.0",
+  "description": "MCP server for ticket management and meeting overview",
+  "main": "dist/index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "tsx src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Balaji2830/ticket-management-meeting-overview-mcp-server.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Balaji2830/ticket-management-meeting-overview-mcp-server/issues"
+  },
+  "homepage": "https://github.com/Balaji2830/ticket-management-meeting-overview-mcp-server#readme",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@types/node": "^26.1.1",
+    "tsx": "^4.23.1",
+    "typescript": "^7.0.2"
+  }
+}

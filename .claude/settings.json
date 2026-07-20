@@ -6,7 +6,19 @@
       "mcp__claude_ai_Notion__notion-fetch",
       "Bash(git config *)",
       "mcp__claude_ai_Notion__notion-update-page",
-      "Bash(git add *)"
+      "Bash(git add *)",
+      "Bash(git commit *)",
+      "Bash(gh --version)",
+      "Bash(gh auth *)",
+      "Bash(git remote *)",
+      "Bash(git push *)",
+      "Bash(npm --version)",
+      "Bash(npm init *)",
+      "Bash(npm install *)",
+      "Bash(npx tsc *)",
+      "Bash(npm run *)",
+      "Bash(timeout 3 node dist/index.js)",
+      "Bash(echo \"exit_code=$?\")"
     ]
   }
 }
